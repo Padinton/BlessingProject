@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>今日祝福语</title>
+  <style>
+    body {
+      font-family: '微软雅黑', sans-serif;
+      background: linear-gradient(120deg, #f6d365, #fda085);
+      animation: gradient 10s ease infinite;
+      background-size: 400% 400%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      transition: opacity 1.5s ease-in;
+      opacity: 0;
+    }
+
+    h1 {
+      color: white;
+      font-size: 2em;
+    }
+
+    #blessing {
+      font-size: 1.6em;
+      margin: 20px;
+      color: #fff;
+      text-shadow: 1px 1px 4px #000;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body onload="showBlessing(); fadeInPage();">
+
+  <h1>🎉 今日祝福 🎉</h1>
+  <div id="blessing">正在加载祝福语...</div>
+
+  <!-- 背景音乐，可自行更换为你喜欢的 mp3 地址 -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8aaf01796.mp3?filename=relaxing-music-11765.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放。
+  </audio>
+
+  <script>
+    const blessings = [
+      "愿你每天都笑口常开，幸福满满！",
+      "祝你身体健康，万事如意！",
+      "愿好运常伴你左右！",
+      "祝你心想事成，梦想成真！",
+      "愿你事业顺利，家庭美满！",
+      "愿你拥有灿烂的笑容和阳光的心情！",
+      "愿你身边充满温暖和爱！",
+      "今天也要元气满满哦！",
+      "无论何时何地，都祝你一切顺利！"
+    ];
+
+    function showBlessing() {
+      const randomIndex = Math.floor(Math.random() * blessings.length);
+      document.getElementById("blessing").textContent = blessings[randomIndex];
+    }
+
+    function fadeInPage() {
+      document.body.style.opacity = 1;
+    }
+  </script>
+
+</body>
+</html>
