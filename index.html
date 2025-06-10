@@ -7,32 +7,30 @@
   <style>
     body {
       font-family: "Georgia", serif;
-      background-color: #f0f4f8;
-      background-image: url("img1.jpg"); /* placeholder, will be replaced by JS */
-      background-size: cover;
-      background-position: center;
       margin: 0;
       padding: 0;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       text-align: center;
-      color: #fff;
+      color: #ffffff;
       backdrop-filter: brightness(0.6);
     }
 
     .verse-box {
-      background-color: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.6);
       padding: 2rem;
       border-radius: 1rem;
       max-width: 700px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
     }
 
     .verse-text {
-      font-size: 1.5rem;
+      font-size: 1.6rem;
       margin-bottom: 1rem;
     }
 
@@ -41,20 +39,41 @@
       color: #ccc;
     }
 
+    .controls {
+      margin-top: 1rem;
+    }
+
+    .controls button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+      cursor: pointer;
+    }
+
     @media (max-width: 600px) {
-      .verse-text {
-        font-size: 1.2rem;
-      }
+      .verse-text { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
-  <div class="verse-box" id="verseBox">
+  <div class="verse-box">
     <div class="verse-text" id="verseText">Loading...</div>
     <div class="verse-ref" id="verseRef"></div>
+    <div class="controls">
+      <button onclick="toggleMusic()">🔊 Toggle Music</button>
+    </div>
   </div>
 
+  <audio autoplay loop id="bgm">
+    <source src="bgm.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <script>
+    // 经文数组
     const verses = [
       { text: "The Lord is my shepherd; I shall not want.", reference: "Psalm 23:1" },
       { text: "Trust in the Lord with all your heart and lean not on your own understanding.", reference: "Proverbs 3:5" },
@@ -86,18 +105,29 @@
       { text: "The righteous man walks in his integrity—blessed are his children after him!", reference: "Proverbs 20:7" }
     ];
 
-    const images = [
-      "img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg"
-    ];
+    const images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg"];
 
     const today = new Date();
-    const dayIndex = today.getDate() + today.getMonth() + today.getFullYear();
+    const dayIndex = today.getFullYear() * 1000 + today.getMonth() * 100 + today.getDate();
+
     const verse = verses[dayIndex % verses.length];
-    const img = images[dayIndex % images.length];
+    const image = images[dayIndex % images.length];
 
     document.getElementById("verseText").textContent = `"${verse.text}"`;
     document.getElementById("verseRef").textContent = `— ${verse.reference}`;
-    document.body.style.backgroundImage = `url('${img}')`;
+    document.body.style.backgroundImage = `url('${image}')`;
+
+    // 设置音量
+    const bgm = document.getElementById("bgm");
+    bgm.volume = 0.3;
+
+    function toggleMusic() {
+      if (bgm.paused) {
+        bgm.play();
+      } else {
+        bgm.pause();
+      }
+    }
   </script>
 </body>
 </html>
