@@ -7,62 +7,97 @@
   <style>
     body {
       font-family: "Georgia", serif;
-      background-color: #f9f7f3;
+      background-color: #f0f4f8;
+      background-image: url("img1.jpg"); /* placeholder, will be replaced by JS */
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       height: 100vh;
-      margin: 0;
-    }
-
-    h1 {
-      color: #333;
-      font-size: 2.5rem;
-      margin-bottom: 30px;
+      text-align: center;
+      color: #fff;
+      backdrop-filter: brightness(0.6);
     }
 
     .verse-box {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 600px;
-      text-align: center;
-      font-size: 1.2rem;
-      color: #555;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 700px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
 
-    .reference {
-      margin-top: 15px;
+    .verse-text {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .verse-ref {
       font-style: italic;
-      color: #888;
+      color: #ccc;
+    }
+
+    @media (max-width: 600px) {
+      .verse-text {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Daily Devotion</h1>
   <div class="verse-box" id="verseBox">
-    <!-- Verse will be inserted here -->
+    <div class="verse-text" id="verseText">Loading...</div>
+    <div class="verse-ref" id="verseRef"></div>
   </div>
 
   <script>
     const verses = [
       { text: "The Lord is my shepherd; I shall not want.", reference: "Psalm 23:1" },
-      { text: "Your word is a lamp to my feet and a light to my path.", reference: "Psalm 119:105" },
-      { text: "Trust in the Lord with all your heart, and do not lean on your own understanding.", reference: "Proverbs 3:5" },
-      { text: "Create in me a clean heart, O God, and renew a right spirit within me.", reference: "Psalm 51:10" },
-      { text: "The fear of the Lord is the beginning of wisdom.", reference: "Proverbs 9:10" },
+      { text: "Trust in the Lord with all your heart and lean not on your own understanding.", reference: "Proverbs 3:5" },
+      { text: "In all your ways acknowledge him, and he will make your paths straight.", reference: "Proverbs 3:6" },
+      { text: "God is our refuge and strength, a very present help in trouble.", reference: "Psalm 46:1" },
       { text: "Be still, and know that I am God.", reference: "Psalm 46:10" },
-      { text: "A gentle answer turns away wrath, but a harsh word stirs up anger.", reference: "Proverbs 15:1" },
-      { text: "Delight yourself in the Lord, and he will give you the desires of your heart.", reference: "Psalm 37:4" }
+      { text: "Create in me a clean heart, O God.", reference: "Psalm 51:10" },
+      { text: "Delight yourself in the Lord, and he will give you the desires of your heart.", reference: "Psalm 37:4" },
+      { text: "The fear of the Lord is the beginning of wisdom.", reference: "Proverbs 9:10" },
+      { text: "The Lord is near to the brokenhearted and saves the crushed in spirit.", reference: "Psalm 34:18" },
+      { text: "A cheerful heart is good medicine.", reference: "Proverbs 17:22" },
+      { text: "Your word is a lamp to my feet and a light to my path.", reference: "Psalm 119:105" },
+      { text: "The name of the Lord is a strong tower; the righteous run to it and are safe.", reference: "Proverbs 18:10" },
+      { text: "I will praise you, for I am fearfully and wonderfully made.", reference: "Psalm 139:14" },
+      { text: "Blessed is the man who walks not in the counsel of the wicked.", reference: "Psalm 1:1" },
+      { text: "The Lord is my light and my salvation; whom shall I fear?", reference: "Psalm 27:1" },
+      { text: "Better is a little with righteousness than great revenues with injustice.", reference: "Proverbs 16:8" },
+      { text: "Many are the plans in a man's heart, but it is the Lord's purpose that prevails.", reference: "Proverbs 19:21" },
+      { text: "Let everything that has breath praise the Lord.", reference: "Psalm 150:6" },
+      { text: "Wait for the Lord; be strong, and let your heart take courage.", reference: "Psalm 27:14" },
+      { text: "My help comes from the Lord, the Maker of heaven and earth.", reference: "Psalm 121:2" },
+      { text: "Commit your work to the Lord, and your plans will be established.", reference: "Proverbs 16:3" },
+      { text: "Taste and see that the Lord is good.", reference: "Psalm 34:8" },
+      { text: "Keep your heart with all vigilance, for from it flow the springs of life.", reference: "Proverbs 4:23" },
+      { text: "This is the day that the Lord has made; let us rejoice and be glad in it.", reference: "Psalm 118:24" },
+      { text: "The generous will themselves be blessed.", reference: "Proverbs 22:9" },
+      { text: "The Lord will fight for you; you need only to be still.", reference: "Exodus 14:14" },
+      { text: "Whoever guards his mouth preserves his life.", reference: "Proverbs 13:3" },
+      { text: "The righteous man walks in his integrity—blessed are his children after him!", reference: "Proverbs 20:7" }
     ];
 
-    const randomVerse = verses[Math.floor(Math.random() * verses.length)];
-    document.getElementById('verseBox').innerHTML = `
-      <div>"${randomVerse.text}"</div>
-      <div class="reference">— ${randomVerse.reference}</div>
-    `;
+    const images = [
+      "img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg", "img5.jpg", "img6.jpg"
+    ];
+
+    const today = new Date();
+    const dayIndex = today.getDate() + today.getMonth() + today.getFullYear();
+    const verse = verses[dayIndex % verses.length];
+    const img = images[dayIndex % images.length];
+
+    document.getElementById("verseText").textContent = `"${verse.text}"`;
+    document.getElementById("verseRef").textContent = `— ${verse.reference}`;
+    document.body.style.backgroundImage = `url('${img}')`;
   </script>
 </body>
 </html>
